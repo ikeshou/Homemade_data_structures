@@ -30,9 +30,7 @@ int main(void) {
     for (int i=0; i<8; i++) max_heap_insert(h_t_2, (double)rand() / RAND_MAX);
     print_heap(h_t_2);
 
-    max_heap_change_num(h_t_2, 0, 0.001);
-    print_heap(h_t_2);
-    max_heap_change_num(h_t_2, 7, 100.0);
+    max_heap_increase_num(h_t_2, 7, 100.0);
     print_heap(h_t_2);
 
     while (!(is_empty(h_t_2))) {

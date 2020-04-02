@@ -15,9 +15,9 @@
  * ヒープサイズを拡張するための expand_heap(),
  * 状態を知るための is_empty(), peek_maximum(),
  * ヒープを出力するための print_heap(),
- * ヒープ操作のための max_heap_change_num(), max_heap_insert(), extract_max()
+ * ヒープ操作のための max_heap_increase_num(), max_heap_insert(), extract_max()
  * を実装した。
- * max_heapify(), max_heap_change_num(), max_heap_insert(), extract_max() はいずれも計算量 O(lgn)
+ * max_heapify(), max_heap_increase_num(), max_heap_insert(), extract_max() はいずれも計算量 O(lgn)
  * build_max_heap() は計算量 O(n)
  * 
  * ヒープを用いてソートを行う heap_sort() も実装した。この計算量は O(nlgn)
@@ -153,22 +153,26 @@ double peek_maximum(heap_t h_t) {
 
 
 /*
-max-heap のあるインデックスの値を変更する O(lgn) アルゴリズム
+max-heap のあるインデックスの値を増やす O(lgn) アルゴリズム
+減らすのは完全二分木が崩れるので NG
 */
-void max_heap_change_num(heap_t h_t, long i, double num) {
+void max_heap_increase_num(heap_t h_t, long i, double num) {
     if (h_t->size <= i) {
-        fprintf(stderr, "max_heap_change_num() in %s: out of range\n", __FILE__);
+        fprintf(stderr, "max_heap_increase_num() in %s: out of range\n", __FILE__);
         exit(-1);
     }
     // 値を減らす時
     if ((h_t->arr)[i] > num) {
-        (h_t->arr)[i] = num;
-        max_heapify(h_t, i);
+        fprintf(stderr, "max_heap_increase_num() in %s: cannot decrease value\n", __FILE__);
+        exit(-1);
+        // (h_t->arr)[i] = num;
+        // max_heapify(h_t, i);
     // 値を増やす時
     } else if ((h_t->arr)[i] < num) {
         (h_t->arr)[i] = num;
-        while (i >= 0) {
-            max_heapify(h_t, i);
+        // 親が存在し、ヒープ条件が壊れている時
+        while (i >= 1 && (h_t->arr)[i] > (h_t->arr)[PARENT(i)]) {
+            swap(h_t->arr+i, h_t->arr+PARENT(i));
             i = PARENT(i);
         }
     }
@@ -185,7 +189,7 @@ void max_heap_insert(heap_t h_t, double num) {
     }
     h_t->size++;
     (h_t->arr)[h_t->size - 1] = - DBL_MAX;    // この段階では確かに max-heap 条件を満たしている
-    max_heap_change_num(h_t, h_t->size - 1, num);    // その -inf を num へと値を変更してやるだけ
+    max_heap_increase_num(h_t, h_t->size - 1, num);    // その -inf を num へと値を変更してやるだけ
 }
 
 

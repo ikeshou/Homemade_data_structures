@@ -23,7 +23,7 @@ heap_t build_max_heap(double*, long);
 
 double peek_maximum(heap_t);
 
-void max_heap_change_num(heap_t, long, double);
+void max_heap_increase_num(heap_t, long, double);
 
 void max_heap_insert(heap_t, double);
 
