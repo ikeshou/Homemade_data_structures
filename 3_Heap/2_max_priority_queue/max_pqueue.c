@@ -108,20 +108,23 @@ record peek_maximum(pqueue_t p_t) {
 }
 
 
-void max_pqueue_change_num(pqueue_t p_t, long i, double new_key) {
+void max_pqueue_increase_key(pqueue_t p_t, long i, double new_key) {
     if (p_t->size <= i) {
         fprintf(stderr, "max_pqueue_change_num() in %s: out of range\n", __FILE__);
         exit(-1);
     }
     // 値を減らす時
     if ((p_t->arr)[i].key > new_key) {
-        (p_t->arr)[i].key = new_key;
-        max_pqueate(p_t, i);
+        fprintf(stderr, "max_pqueue_increase_num() in %s: cannot decrease key\n", __FILE__);
+        exit(-1);
+        // (p_t->arr)[i].key = new_key;
+        // max_pqueate(p_t, i);
     // 値を増やす時
     } else if ((p_t->arr)[i].key < new_key) {
         (p_t->arr)[i].key = new_key;
-        while (i >= 0) {
-            max_pqueate(p_t, i);
+        // 親が存在し、ヒープ条件が壊れている時
+        while (i >= 1 && (p_t->arr)[i].key > (p_t->arr)[PARENT(i)].key) {
+            swap(p_t->arr+i, p_t->arr+PARENT(i));
             i = PARENT(i);
         }
     }
@@ -137,7 +140,7 @@ void max_pqueue_insert(pqueue_t p_t, record rec) {
     p_t->size++;
     record tmp = {rec.name, - DBL_MAX};
     (p_t->arr)[p_t->size - 1] = tmp;    // この段階では確かに max-heap 条件を満たしている
-    max_pqueue_change_num(p_t, p_t->size - 1, rec.key);    // その -inf を rec.key へと値を変更してやるだけ
+    max_pqueue_increase_key(p_t, p_t->size - 1, rec.key);    // その -inf を rec.key へと値を変更してやるだけ
 }
 
 

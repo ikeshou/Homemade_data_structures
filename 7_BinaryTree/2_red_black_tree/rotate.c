@@ -81,7 +81,7 @@ void right_rotate(tree_t t_t, node_t n_t) {
 
 /*
 LR_rotate ... 自身の左の子において left_rotate を行い、そのあと自身に right_rotate を行う。なお、左の子、左の子の右の子は NIL でないものとする。
-RL_rotate ...      右           right_rotate                    left_rotate             右の子、右のこの左の子
+RL_rotate ...      右           right_rotate                    left_rotate             右の子、右の子の左の子
 
 以下の節点 u に対し LR_rotate() を施すと
             u                                      w 

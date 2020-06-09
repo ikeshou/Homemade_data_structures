@@ -189,7 +189,7 @@ int main(void) {
          2(b)                     8(b)
      y1(r)    3(b)            7(b)   9(b)
              2(r)            5(r)      
-    となるはず。これを rb_delete_fix すると (case 3-1)
+    となるはず。これを rb_delete_fix すると (case 2-1)
                      5(b)
          2(b)                     8(b)
       2(b)    3(b)            7(b)   9(b)

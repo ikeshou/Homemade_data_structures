@@ -28,7 +28,7 @@ void max_pqueate(pqueue_t, long);
 
 record peek_maximum(pqueue_t);
 
-void max_pqueue_change_num(pqueue_t, long, double);
+void max_pqueue_increase_key(pqueue_t, long, double);
 
 void max_pqueue_insert(pqueue_t, record);
 
